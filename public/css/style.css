@@ -1,0 +1,27 @@
+.separator{
+    display: flex;
+    flex-direction: row;
+}
+
+.titlecontainer{
+    background-color: #39394D;
+    padding: 10px;
+    margin-bottom: 20px;
+    height: 60px;
+}
+
+.title{
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.title i,span{
+    font-size: 180%;
+}
+
+.rightside{
+    display: flex;
+    flex-direction: column;
+}

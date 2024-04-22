@@ -35,11 +35,23 @@ class Session
     private Collection $programmeSession;
 
     #[ORM\ManyToOne(inversedBy: 'sessions')]
-    private ?Formation $formationSession = null;
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Formation $formation = null;
+
+    /**
+     * @var Collection<int, Stagiaire>
+     */
+    #[ORM\ManyToMany(targetEntity: Stagiaire::class, mappedBy: 'sessions')]
+    private Collection $stagiaires;
+
+    #[ORM\ManyToOne(inversedBy: 'sessions')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Formateur $formateur = null;
 
     public function __construct()
     {
         $this->programmeSession = new ArrayCollection();
+        $this->stagiaires = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -125,14 +137,53 @@ class Session
         return $this;
     }
 
-    public function getFormationSession(): ?Formation
+    public function getFormation(): ?Formation
     {
-        return $this->formationSession;
+        return $this->formation;
     }
 
-    public function setFormationSession(?Formation $formationSession): static
+    public function setFormation(?Formation $formation): static
     {
-        $this->formationSession = $formationSession;
+        $this->formation = $formation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Stagiaire>
+     */
+    public function getStagiaires(): Collection
+    {
+        return $this->stagiaires;
+    }
+
+    public function addStagiaire(Stagiaire $stagiaire): static
+    {
+        if (!$this->stagiaires->contains($stagiaire)) {
+            $this->stagiaires->add($stagiaire);
+            $stagiaire->addSession($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStagiaire(Stagiaire $stagiaire): static
+    {
+        if ($this->stagiaires->removeElement($stagiaire)) {
+            $stagiaire->removeSession($this);
+        }
+
+        return $this;
+    }
+
+    public function getFormateur(): ?Formateur
+    {
+        return $this->formateur;
+    }
+
+    public function setFormateur(?Formateur $formateur): static
+    {
+        $this->formateur = $formateur;
 
         return $this;
     }
