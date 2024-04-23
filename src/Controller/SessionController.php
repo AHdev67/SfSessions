@@ -61,7 +61,6 @@ class SessionController extends AbstractController
             'formAddSession' => $form,
             'edit' => $session->getId(),
             'stagiaires'=>$stagiaires
-
         ]);
     }
 
@@ -80,11 +79,11 @@ class SessionController extends AbstractController
     //--------------------------------------------------
     //METHODE SHOW QUI RENVOIE LES DETAILS D'UNE SESSION
     //--------------------------------------------------
-    #[Route('/session/{id}', name: 'show_session')]
-    public function show(Session $session): Response
-    {
-        return $this->render('session/show.html.twig', [
-            'session' => $session
-        ]);
-    }
+    // #[Route('/session/{id}', name: 'show_session')]
+    // public function show(Session $session): Response
+    // {
+    //     return $this->render('session/show.html.twig', [
+    //         'session' => $session
+    //     ]);
+    // }
 }
