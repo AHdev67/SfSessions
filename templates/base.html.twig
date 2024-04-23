@@ -12,7 +12,7 @@
         
     </head>
     <body>
-        <div class="separator">
+        {# <div class="separator">
             <div class="d-flex flex-column flex-shrink-0 text-bg-dark" style="width: 25vw; height: 100vh">
                 <div class="titlecontainer">
                     <a href="{{ path('app_session') }}" class="d-flex align-items-center mb-5 mb-md-0 me-md-auto text-white text-decoration-none">
@@ -23,7 +23,6 @@
                     </a>
                 </div>
                
-        
                 <ul class="nav flex-column mb-auto ps-3">
                     <li>
                         <a href="#" class="nav-link text-white">Nos formations</a>
@@ -55,8 +54,8 @@
                 <header class="d-flex flex-row-reverse align-items-center py-3 border-bottom bg-light" style="width: 75vw; height: 60px">
                     <div class="me-3 d-flex" style="gap: 10px;">
                         {% if app.user %}
-                            {# logout path defined in config/packages/security.yaml #}
-                            <a href="{{ path('app_logout') }}">
+                        
+                            {# <a href="{{ path('app_logout') }}">
                                 Logout
                             </a> 
                             {% if is_granted('ROLE_ADMIN') %}
@@ -78,7 +77,81 @@
                 {% block body %}{% endblock %}
             </div>
             
+        </div> #}
+
+        <header class="d-flex align-items-center justify-content-between fixed-top bg-light" style="width: auto; height: 60px">
+
+            <div class="titlecontainer">
+                <a href="" class="d-flex align-items-center mb-5 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <div class="title">
+                        <i class="fa-brands fa-symfony"></i>
+                        <span>Sessions</span>
+                    </div>
+                </a>
+            </div>
+
+            
+            <div class="me-3 d-flex" style="gap: 10px;">
+                {% if app.user %}
+                   
+                    <a href="{{ path('app_logout') }}">
+                        Logout
+                    </a> 
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="">
+                            Administrator pannel
+                        </a>
+                    {% endif %}
+                {% else %}
+                        <a href="{{ path('app_login') }}">
+                            <button class="btn btn-outline-dark">Connexion</button>
+                        </a>
+                        <a href="{{ path('app_register') }}">
+                            <button class="btn btn-outline-dark">Inscription</button>
+                        </a>
+                   
+                {% endif %} 
+            </div>
+            
+        </header>
+
+        <div class="separator">
+
+            <div class="sidebar d-flex flex-column flex-shrink-0 text-bg-dark">
+        
+                <ul class="nav flex-column mb-auto ps-3">
+                    <li>
+                        <a href="#" class="nav-link text-white">Nos formations</a>
+                    </li>
+                    <hr>
+                    <li>
+                        <a href="#" class="nav-link text-white">Modules</a>
+                    </li>
+                    <hr>
+                    <li>
+                        <span class="nav-link text-white"><b>Sessions</b></span>
+                        <a href="{{ path('app_session') }}" class="nav-link text-white ms-3">Liste des sessions</a>
+                        <a href="{{ path('new_session') }}" class="nav-link text-white ms-3">Ajouter une session</a>
+                    </li>
+                    <hr>
+                    <li>
+                        <span class="nav-link text-white"><b>Formateurs</b></span>
+                        <a href="#" class="nav-link text-white ms-3">Liste des formateurs</a>
+                    </li>
+                    <hr>
+                    <li>
+                        <span class="nav-link text-white"><b>Stagiaires</b></span>
+                        <a href="#" class="nav-link text-white ms-3">Liste des stagiaires</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="sidecontent">
+                {% block body %}{% endblock %}
+            </div>
+            
         </div>
+
         {% block javascripts %}
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
             <script src="https://kit.fontawesome.com/b28c0a82b5.js" crossorigin="anonymous"></script>
