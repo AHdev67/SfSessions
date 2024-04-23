@@ -9,31 +9,52 @@
         {% else %}
             <h1 class="display-5 fw-bold text-body-emphasis mb-5">Ajouter une session :</h1>
         {% endif %}
-        
-        {{ form_start(formAddSession) }}
-            {{ form_row(formAddSession.formation) }}
-            {{ form_row(formAddSession.intituleSession) }}
-            {{ form_row(formAddSession.nbPlaces) }}
-            <div class="row">
-                <div class="col-sm">
-                    {{ form_row(formAddSession.dateDebut) }}
-                </div>
-                <div class="col-sm">
-                    {{ form_row(formAddSession.dateFin) }}
-                </div>
+        <div class="mainInfo pb-3">
+            <div class="infoForm">
+                {{ form_start(formAddSession) }}
+                    {{ form_row(formAddSession.formation) }}
+                    {{ form_row(formAddSession.intituleSession) }}
+                    {{ form_row(formAddSession.nbPlaces) }}
+                    <div class="row">
+                        <div class="col-sm">
+                            {{ form_row(formAddSession.dateDebut) }}
+                        </div>
+                        <div class="col-sm">
+                            {{ form_row(formAddSession.dateFin) }}
+                        </div>
+                    </div>
+                    {# {{ form_row(formAddSession.stagiaires) }} #}
+                    {{ form_row(formAddSession.formateur) }}
+                    {{ form_row(formAddSession.valider) }}
+                {{ form_end(formAddSession) }}
             </div>
-            {# {{ form_row(formAddSession.stagiaires) }} #}
-            {{ form_row(formAddSession.formateur) }}
-            {{ form_row(formAddSession.valider) }}
-        {{ form_end(formAddSession) }}
-    
-        {% if edit %}
+
+            {% if edit %}
+                <table class="table mt-3">
+                    <thead>
+                        <tr>
+                            <th>Stagiaires inscrits</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for stagiaire in session.stagiaires %}
+                            <tr>
+                                <td>{{ stagiaire }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+        
+        <div class="pb-3">
+            <h3>Inscrire un stagiaire à cette session</h3>
             {% for stagiaire in stagiaires %}
-            {{ stagiaire }} <a href="">+</a>
+                {{ stagiaire }} <a href="">+</a>
             {% endfor %}
-        {% else %}
-            
-        {% endif %}
+        </div>
+        
+        
     </main>
 
    
