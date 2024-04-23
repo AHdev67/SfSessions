@@ -2,17 +2,89 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Session;
+use App\Entity\Stagiaire;
+use App\Form\SessionType;
+use App\Repository\SessionRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class SessionController extends AbstractController
 {
+    //----------------------------------------------
+    //METHODE SHOW QUI RENVOIE LA LISTE DES SESSIONS
+    //----------------------------------------------
     #[Route('/session', name: 'app_session')]
-    public function index(): Response
+    public function index(SessionRepository $sessionRepository): Response
     {
+        $sessions = $sessionRepository->findBy([], ["dateDebut" => "ASC"]);
         return $this->render('session/index.html.twig', [
             'controller_name' => 'SessionController',
+            'sessions' => $sessions
+        ]);
+    }
+
+    //---------------------------------------------------------------------------------
+    //METHODE NEW_EDIT FORM QUI RENVOIE UN FORMULAIRE D'AJOUT / MODIFICATION DE SESSION
+    //---------------------------------------------------------------------------------
+    #[Route('/session/new', name: 'new_session')]
+    #[Route('/session/{id}/edit', name: 'edit_session')]
+    public function new_edit(Session $session = null, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        if(!$session){
+            $session = new Session();
+            $stagiaires = null;
+        }
+        else{
+            $stagiaireRepo = $entityManager->getRepository(Stagiaire::class);
+            $stagiaires = $stagiaireRepo->findAll();
+        }
+
+        $form = $this->createForm(SessionType::class, $session);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $session = $form->getData();
+            //equivalent PDO prepare
+            $entityManager->persist($session);
+            //equivalent PDO execute
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_session');
+        }
+
+        return $this->render('session/new.html.twig', [
+            'formAddSession' => $form,
+            'edit' => $session->getId(),
+            'stagiaires'=>$stagiaires
+
+        ]);
+    }
+
+    //---------------------------------------
+    //METHODE DELETE QUI SUPPRIME UNE SESSION
+    //---------------------------------------
+    #[Route('/session/{id}/delete', name: 'delete_session')]
+    public function delete(Session $session, EntityManagerInterface $entityManager)
+    {
+        $entityManager->remove($session);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_session');
+    }
+
+    //--------------------------------------------------
+    //METHODE SHOW QUI RENVOIE LES DETAILS D'UNE SESSION
+    //--------------------------------------------------
+    #[Route('/session/{id}', name: 'show_session')]
+    public function show(Session $session): Response
+    {
+        return $this->render('session/show.html.twig', [
+            'session' => $session
         ]);
     }
 }
