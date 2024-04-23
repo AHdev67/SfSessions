@@ -79,7 +79,7 @@
             
         </div> #}
 
-        <header class="d-flex align-items-center justify-content-between fixed-top bg-light" style="width: auto; height: 60px">
+        <header class="d-flex align-items-center justify-content-between fixed-top bg-light">
 
             <div class="titlecontainer">
                 <a href="" class="d-flex align-items-center mb-5 mb-md-0 me-md-auto text-white text-decoration-none">
@@ -93,15 +93,15 @@
             
             <div class="me-3 d-flex" style="gap: 10px;">
                 {% if app.user %}
-                   
-                    <a href="{{ path('app_logout') }}">
-                        Logout
-                    </a> 
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <a href="">
-                            Administrator pannel
-                        </a>
+                   {% if is_granted('ROLE_ADMIN') %}
+                        bingbong
                     {% endif %}
+                    <a href="{{ path('app_logout') }}">
+                        <button class="btn btn-outline-dark">Déconnexion</button>
+                    </a>
+                    <a href="">
+                        <button class="btn btn-outline-dark" style="border-radius: 100%; background-color:#39394D"><i class="fa-solid fa-user" style="color: white;"></i></button>
+                    </a>
                 {% else %}
                         <a href="{{ path('app_login') }}">
                             <button class="btn btn-outline-dark">Connexion</button>
