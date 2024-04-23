@@ -192,4 +192,9 @@ class Session
     {
         return $this->intituleSession;
     }
+
+    public function getPlacesRestantes(): ?int
+    {
+        return $this->nbPlaces - count($this->stagiaires);
+    }
 }
