@@ -22,7 +22,7 @@ USE `sfsessions`;
 -- Listage de la structure de table sfsessions. categorie
 CREATE TABLE IF NOT EXISTS `categorie` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `intitule_categorie` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `intitule_categorie` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -31,33 +31,40 @@ CREATE TABLE IF NOT EXISTS `categorie` (
 -- Listage de la structure de table sfsessions. formateur
 CREATE TABLE IF NOT EXISTS `formateur` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nom` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `prenom` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nom` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `prenom` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `date_naissance` date NOT NULL,
-  `tel` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `code_postal` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ville` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tel` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code_postal` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ville` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table sfsessions.formateur : ~0 rows (environ)
+-- Listage des données de la table sfsessions.formateur : ~1 rows (environ)
+INSERT INTO `formateur` (`id`, `nom`, `prenom`, `date_naissance`, `tel`, `email`, `code_postal`, `ville`) VALUES
+	(1, 'FORMATEURMAN', 'Fabrice', '1972-04-23', '06 50 42 68 51', 'fabrice.formateurman@wanadoo.fr', '67000', 'STRASBOURG');
 
 -- Listage de la structure de table sfsessions. formation
 CREATE TABLE IF NOT EXISTS `formation` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `intitule_formation` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `intitule_formation` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table sfsessions.formation : ~0 rows (environ)
+-- Listage des données de la table sfsessions.formation : ~4 rows (environ)
+INSERT INTO `formation` (`id`, `intitule_formation`) VALUES
+	(1, 'Développeur Web & Web Mobile'),
+	(2, 'Concepteur Développeur d\'Application'),
+	(3, 'UI/UX Designer'),
+	(4, 'Remise à niveau');
 
 -- Listage de la structure de table sfsessions. messenger_messages
 CREATE TABLE IF NOT EXISTS `messenger_messages` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `body` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `headers` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue_name` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `headers` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue_name` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` datetime NOT NULL COMMENT '(DC2Type:datetime_immutable)',
   `available_at` datetime NOT NULL COMMENT '(DC2Type:datetime_immutable)',
   `delivered_at` datetime DEFAULT NULL COMMENT '(DC2Type:datetime_immutable)',
@@ -73,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `messenger_messages` (
 CREATE TABLE IF NOT EXISTS `module` (
   `id` int NOT NULL AUTO_INCREMENT,
   `categorie_id` int NOT NULL,
-  `intitule_module` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `intitule_module` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_C242628BCF5E72D` (`categorie_id`),
   CONSTRAINT `FK_C242628BCF5E72D` FOREIGN KEY (`categorie_id`) REFERENCES `categorie` (`id`)
@@ -101,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `session` (
   `id` int NOT NULL AUTO_INCREMENT,
   `formation_id` int NOT NULL,
   `formateur_id` int NOT NULL,
-  `intitule_session` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `intitule_session` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `nb_places` int NOT NULL,
   `date_debut` datetime NOT NULL,
   `date_fin` datetime NOT NULL,
@@ -110,26 +117,30 @@ CREATE TABLE IF NOT EXISTS `session` (
   KEY `IDX_D044D5D4155D8F51` (`formateur_id`),
   CONSTRAINT `FK_D044D5D4155D8F51` FOREIGN KEY (`formateur_id`) REFERENCES `formateur` (`id`),
   CONSTRAINT `FK_D044D5D45200282E` FOREIGN KEY (`formation_id`) REFERENCES `formation` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table sfsessions.session : ~0 rows (environ)
+INSERT INTO `session` (`id`, `formation_id`, `formateur_id`, `intitule_session`, `nb_places`, `date_debut`, `date_fin`) VALUES
+	(1, 1, 1, 'DWWM_2_24_25', 6, '2024-04-23 00:00:00', '2025-02-21 00:00:00');
 
 -- Listage de la structure de table sfsessions. stagiaire
 CREATE TABLE IF NOT EXISTS `stagiaire` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nom` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `prenom` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nom` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `prenom` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `date_naissance` date NOT NULL,
-  `tel` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `adresse` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `code_postal` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ville` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tel` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `adresse` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code_postal` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ville` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `date_inscription` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table sfsessions.stagiaire : ~0 rows (environ)
+-- Listage des données de la table sfsessions.stagiaire : ~1 rows (environ)
+INSERT INTO `stagiaire` (`id`, `nom`, `prenom`, `date_naissance`, `tel`, `email`, `adresse`, `code_postal`, `ville`, `date_inscription`) VALUES
+	(1, 'MAGNIFIQUE', 'Marius', '1993-02-23', '06 61 25 47 83', 'marius.magnifique@gmail.com', '7 rue des Pamplemousses', '67000', 'STRASBOURG', '2024-04-23 11:20:50');
 
 -- Listage de la structure de table sfsessions. stagiaire_session
 CREATE TABLE IF NOT EXISTS `stagiaire_session` (
@@ -147,16 +158,18 @@ CREATE TABLE IF NOT EXISTS `stagiaire_session` (
 -- Listage de la structure de table sfsessions. utilisateur
 CREATE TABLE IF NOT EXISTS `utilisateur` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `email` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(180) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `roles` json NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nom` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `prenom` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nom` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `prenom` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_IDENTIFIER_EMAIL` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table sfsessions.utilisateur : ~0 rows (environ)
+-- Listage des données de la table sfsessions.utilisateur : ~1 rows (environ)
+INSERT INTO `utilisateur` (`id`, `email`, `roles`, `password`, `nom`, `prenom`) VALUES
+	(1, 'john.php@wanadoo.fr', '[]', '$2y$13$9u1eRdPcs/wXJlKx3uRxNOkHqyJ3.fV4qlmLv2o58j1Gv3FlPxyJC', 'PHP', 'John');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
