@@ -1,9 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Sessions{% endblock %}
+{% block title %}Lite des sessions{% endblock %}
 
 {% block body %}
-    <p>
-        bing bong
-    </p>
+    <main class="container p-3">
+        <h1 class="display-5 fw-bold text-body-emphasis mb-5">Liste des sessions :</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Session</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for session in sessions %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('show_session', {'id': session.id}) }}">{{ session }}</a> 
+                            <a href="{{ path('edit_session', {'id': session.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a> |
+                            <a class="delbtn" href="{{ path('delete_session', {'id': session.id}) }}"><i class="fa-solid fa-trash"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            
+        </table class="table">
+    </main>
+    
 {% endblock %}
