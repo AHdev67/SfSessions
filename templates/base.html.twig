@@ -12,73 +12,6 @@
         
     </head>
     <body>
-        {# <div class="separator">
-            <div class="d-flex flex-column flex-shrink-0 text-bg-dark" style="width: 25vw; height: 100vh">
-                <div class="titlecontainer">
-                    <a href="{{ path('app_session') }}" class="d-flex align-items-center mb-5 mb-md-0 me-md-auto text-white text-decoration-none">
-                        <div class="title">
-                            <i class="fa-brands fa-symfony"></i>
-                            <span>Sessions</span>
-                        </div>
-                    </a>
-                </div>
-               
-                <ul class="nav flex-column mb-auto ps-3">
-                    <li>
-                        <a href="#" class="nav-link text-white">Nos formations</a>
-                    </li>
-                    <hr>
-                    <li>
-                        <a href="#" class="nav-link text-white">Modules</a>
-                    </li>
-                    <hr>
-                    <li>
-                        <span class="nav-link text-white"><b>Sessions</b></span>
-                        <a href="#" class="nav-link text-white ms-3">Liste des sessions</a>
-                    </li>
-                    <hr>
-                    <li>
-                        <span class="nav-link text-white"><b>Formateurs</b></span>
-                        <a href="#" class="nav-link text-white ms-3">Liste des formateurs</a>
-                    </li>
-                    <hr>
-                    <li>
-                        <span class="nav-link text-white"><b>Stagiaires</b></span>
-                        <a href="#" class="nav-link text-white ms-3">Liste des stagiaires</a>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="rightside">
-                
-                <header class="d-flex flex-row-reverse align-items-center py-3 border-bottom bg-light" style="width: 75vw; height: 60px">
-                    <div class="me-3 d-flex" style="gap: 10px;">
-                        {% if app.user %}
-                        
-                            {# <a href="{{ path('app_logout') }}">
-                                Logout
-                            </a> 
-                            {% if is_granted('ROLE_ADMIN') %}
-                                <a href="">
-                                    Administrator pannel
-                                </a>
-                            {% endif %}
-                        {% else %}
-                                <a href="{{ path('app_login') }}">
-                                    <button class="btn btn-outline-dark">Connexion</button>
-                                </a>
-                                <a href="{{ path('app_register') }}">
-                                    <button class="btn btn-outline-dark">Inscription</button>
-                                </a>
-                           
-                        {% endif %} 
-                    </div>
-                </header>
-                {% block body %}{% endblock %}
-            </div>
-            
-        </div> #}
-
         <header class="d-flex align-items-center justify-content-between fixed-top bg-light">
 
             <div class="titlecontainer">
@@ -102,14 +35,6 @@
                     <a href="">
                         <button class="btn btn-outline-dark" style="border-radius: 100%; background-color:#39394D"><i class="fa-solid fa-user" style="color: white;"></i></button>
                     </a>
-                {% else %}
-                        <a href="{{ path('app_login') }}">
-                            <button class="btn btn-outline-dark">Connexion</button>
-                        </a>
-                        <a href="{{ path('app_register') }}">
-                            <button class="btn btn-outline-dark">Inscription</button>
-                        </a>
-                   
                 {% endif %} 
             </div>
             
