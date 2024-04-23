@@ -9,21 +9,26 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Session</th>
+                    <th>Formation</th>
+                    <th>Intitulé</th>
+                    <th>Début</th>
+                    <th>Fin</th>
+                    <th>Places restantes</th>
+                    <th>Détails</th>
                 </tr>
             </thead>
             <tbody>
                 {% for session in sessions %}
                     <tr>
-                        <td>
-                            <a href="{{ path('show_session', {'id': session.id}) }}">{{ session }}</a> 
-                            <a href="{{ path('edit_session', {'id': session.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a> |
-                            <a class="delbtn" href="{{ path('delete_session', {'id': session.id}) }}"><i class="fa-solid fa-trash"></i></a>
-                        </td>
+                        <td>{{ session.formation }}</td>
+                        <td>{{ session }}</td>
+                        <td>{{ session.dateDebut | date("d/m/Y") }}</td>
+                        <td>{{ session.dateFin | date("d/m/Y") }}</td>
+                        <td>{{ session.placesRestantes }}</td>
+                        <td><a href="{{ path('edit_session', {'id': session.id}) }}"><i class="fa-solid fa-circle-info"></i></a></td>
                     </tr>
                 {% endfor %}
             </tbody>
-            
         </table class="table">
     </main>
     
