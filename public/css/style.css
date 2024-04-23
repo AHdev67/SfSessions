@@ -32,13 +32,30 @@ header{
     width: 250px;
     height: 100vh;
     padding-top: 75px;
+    position: fixed;
 }
 
 .sidecontent{
     margin-top: 60px;
+    margin-left: 250px;
     padding: 30px;
 }
 
 table th, td{
     text-align: center;
+}
+
+.mainInfo{
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+    width: 66vw;
+}
+
+.infoForm{
+    width: 33vw;
+}
+
+.mainInfo table{
+    width: 33vh;
 }
