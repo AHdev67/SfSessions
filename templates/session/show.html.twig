@@ -1,0 +1,43 @@
+{# {% extends 'base.html.twig' %}
+
+{% block title %}Détail d'une session{% endblock %}
+
+{% block body %}
+
+    <main class="container py-3">
+        <h1 class="display-5 fw-bold text-body-emphasis mb-5">Détail de la session :</h1>
+        
+        <p>
+            <b>Formation :</b> {{ session.formation }} <br>
+            <b>Intitulé de la session :</b> {{ session.intituleSession }} <br>
+            <hr>
+            <b>Formateur :</b> {{ session.formateur}} <br>
+            <hr>
+            <b>Date de début :</b> {{ session.dateDebut | date("d/m/Y") }} <br>
+            <b>Date de fin :</b> {{ session.dateFin | date("d/m/Y") }} <br>
+            <hr>
+        </p>
+
+        <h3>Liste des stagiaires :</h3>
+        {% if session.stagiaires | length > 0 %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Stagiaire</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for stagiaire in session.stagiaires %}
+                        <tr>
+                            <td><a href="">{{ stagiaire }}</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+         {% else %}
+            <p>Aucun stagiaire dans cette session.</p>
+        {% endif %}
+    </main>
+
+{% endblock %} #}
