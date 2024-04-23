@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Formulaire session{% endblock %}
+
+{% block body %}
+    <main class="container py-3">
+        {% if edit %}
+            <h1 class="display-5 fw-bold text-body-emphasis mb-5">Modifier la session :</h1>
+        {% else %}
+            <h1 class="display-5 fw-bold text-body-emphasis mb-5">Ajouter une session :</h1>
+        {% endif %}
+        
+        {{ form_start(formAddSession) }}
+            {{ form_row(formAddSession.formation) }}
+            {{ form_row(formAddSession.intituleSession) }}
+            {{ form_row(formAddSession.nbPlaces) }}
+            <div class="row">
+                <div class="col-sm">
+                    {{ form_row(formAddSession.dateDebut) }}
+                </div>
+                <div class="col-sm">
+                    {{ form_row(formAddSession.dateFin) }}
+                </div>
+            </div>
+            {# {{ form_row(formAddSession.stagiaires) }} #}
+            {{ form_row(formAddSession.formateur) }}
+            {{ form_row(formAddSession.valider) }}
+        {{ form_end(formAddSession) }}
+    
+        {% if edit %}
+            {% for stagiaire in stagiaires %}
+            {{ stagiaire }} <a href="">+</a>
+            {% endfor %}
+        {% else %}
+            
+        {% endif %}
+    </main>
+
+   
+{% endblock %}
