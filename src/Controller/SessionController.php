@@ -60,8 +60,14 @@ class SessionController extends AbstractController
         return $this->render('session/new.html.twig', [
             'formAddSession' => $form,
             'edit' => $session->getId(),
-            'stagiaires'=>$stagiaires
+            'stagiaires'=>$stagiaires,
+            'session'=>$session
         ]);
+    }
+
+    #[Route('/session/{id}/add')]
+    public function add(){
+        //code goes here
     }
 
     //---------------------------------------
