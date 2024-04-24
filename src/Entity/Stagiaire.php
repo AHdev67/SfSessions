@@ -2,11 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\StagiaireRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Session;
+use App\Repository\StagiaireRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+
 
 #[ORM\Entity(repositoryClass: StagiaireRepository::class)]
 class Stagiaire
@@ -198,7 +201,7 @@ class Stagiaire
 
     public function getCurrentSession()
     {
-        $now = new \DateTime();
+        $now = new DateTime();
         foreach($this->sessions as $session){
             if($session->getDateDebut() <= $now && $session->getDateFin() >= $now){
                 return $session;
