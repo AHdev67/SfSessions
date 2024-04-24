@@ -46,27 +46,29 @@
         
                 <ul class="nav flex-column mb-auto ps-3">
                     <li>
-                        <a href="" class="nav-link text-white">Nos formations</a>
+                        <a href="" class="nav-link text-white"><i class="fa-solid fa-list"></i> Formations</a>
                     </li>
                     <hr>
                     <li>
-                        <a href="" class="nav-link text-white">Modules</a>
+                        <a href="" class="nav-link text-white"><i class="fa-solid fa-list"></i> Modules</a>
                     </li>
                     <hr>
                     <li>
                         <span class="nav-link text-white"><b>Sessions</b></span>
-                        <a href="{{ path('app_session') }}" class="nav-link text-white ms-3">Liste des sessions</a>
-                        <a href="{{ path('new_session') }}" class="nav-link text-white ms-3">Ajouter une session</a>
+                        <a href="{{ path('app_session') }}" class="nav-link text-white ms-3"><i class="fa-solid fa-list"></i> Liste des sessions</a>
+                        <a href="{{ path('new_session') }}" class="nav-link text-white ms-3"><i class="fa-solid fa-plus"> </i> Ajouter une session</a>
                     </li>
                     <hr>
                     <li>
                         <span class="nav-link text-white"><b>Formateurs</b></span>
-                        <a href="" class="nav-link text-white ms-3">Liste des formateurs</a>
+                        <a href="{{ path('app_formateur') }}" class="nav-link text-white ms-3"><i class="fa-solid fa-list"></i> Liste des formateurs</a>
+                        <a href="{{ path('new_formateur') }}" class="nav-link text-white ms-3"><i class="fa-solid fa-plus"> </i> Ajouter un formateur</a>
                     </li>
                     <hr>
                     <li>
                         <span class="nav-link text-white"><b>Stagiaires</b></span>
-                        <a href="{{ path('app_stagiaire') }}" class="nav-link text-white ms-3">Liste des stagiaires</a>
+                        <a href="{{ path('app_stagiaire') }}" class="nav-link text-white ms-3"><i class="fa-solid fa-list"></i> Liste des stagiaires</a>
+                        <a href="{{ path('new_stagiaire') }}" class="nav-link text-white ms-3"><i class="fa-solid fa-plus"> </i> Ajouter un stagiaire</a>
                     </li>
                 </ul>
             </div>
