@@ -1,46 +1,46 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Formulaire session{% endblock %}
+{% block title %}Formulaire stagiaire{% endblock %}
 
 {% block body %}
     <main class="container py-3">
         {% if edit %}
-            <h1 class="display-5 fw-bold text-body-emphasis mb-5">Information session</h1>
+            <h1 class="display-5 fw-bold text-body-emphasis mb-5">Information stagiaire</h1>
         {% else %}
-            <h1 class="display-5 fw-bold text-body-emphasis mb-5">Ajouter une session :</h1>
+            <h1 class="display-5 fw-bold text-body-emphasis mb-5">Ajouter une stagiaire :</h1>
         {% endif %}
-        <div class="mainInfo pb-3">
+        <div class="mainInfo pb-3 d-flex align-items-start">
             <div class="infoForm">
-                {{ form_start(formAddSession) }}
-                    {{ form_row(formAddSession.formation) }}
-                    {{ form_row(formAddSession.intituleSession) }}
-                    {{ form_row(formAddSession.nbPlaces) }}
+                {{ form_start(formAddStagiaire) }}
+                    {{ form_row(formAddStagiaire.nom) }}
+                    {{ form_row(formAddStagiaire.prenom) }}
+                    {{ form_row(formAddStagiaire.dateNaissance) }}
+                    {{ form_row(formAddStagiaire.tel) }}
+                    {{ form_row(formAddStagiaire.email) }}
+                    {{ form_row(formAddStagiaire.adresse) }}
                     <div class="row">
                         <div class="col-sm">
-                            {{ form_row(formAddSession.dateDebut) }}
+                            {{ form_row(formAddStagiaire.codePostal) }}
                         </div>
                         <div class="col-sm">
-                            {{ form_row(formAddSession.dateFin) }}
+                            {{ form_row(formAddStagiaire.ville) }}
                         </div>
                     </div>
-                    {# {{ form_row(formAddSession.stagiaires) }} #}
-                    {{ form_row(formAddSession.formateur) }}
-                    {{ form_row(formAddSession.valider) }}
-                {{ form_end(formAddSession) }}
+                    {{ form_row(formAddStagiaire.valider) }}
+                {{ form_end(formAddStagiaire) }}
             </div>
 
             {% if edit %}
                 <table class="table mt-3">
                     <thead>
                         <tr>
-                            <th>Stagiaires inscrits</th>
+                            <th>Inscriptions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for stagiaire in session.stagiaires %}
+                        {% for session in stagiaire.sessions %}
                             <tr>
-                                <td>
-                                    {{ stagiaire }} <a href="{{ path('remove_stagiaire', {'id': session.id, 'stagiaireId':stagiaire.id}) }}"><i class="fa-solid fa-minus"></i></a></td>
+                                <td>{{ session }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -49,17 +49,8 @@
         </div>
         
         {% if edit %}
-            <div class="pb-5">
-                <h3>Inscrire un stagiaire à cette session</h3>
-                {% for stagiaire in stagiaires %}
-                    {{ stagiaire }} <a href="{{ path('add_stagiaire', {'id': session.id, 'stagiaireId':stagiaire.id}) }}"><i class="fa-solid fa-plus"></i></a>
-                {% endfor %}
-            </div>
-        {% endif %}
-        
-        {% if edit %}
             <div class="pt-2 pb-3">
-                <a href="{{ path('delete_session', {'id': session.id}) }}">
+                <a href="{{ path('delete_stagiaire', {'id': stagiaire.id}) }}">
                     <button class="btn btn-danger">Suprimmer</button>
                 </a>
             </div>
