@@ -24,9 +24,16 @@ CREATE TABLE IF NOT EXISTS `categorie` (
   `id` int NOT NULL AUTO_INCREMENT,
   `intitule_categorie` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table sfsessions.categorie : ~0 rows (environ)
+-- Listage des données de la table sfsessions.categorie : ~6 rows (environ)
+INSERT INTO `categorie` (`id`, `intitule_categorie`) VALUES
+	(1, 'Algorithmie'),
+	(2, 'Dev Frontend'),
+	(3, 'Dev Backend'),
+	(4, 'Bureautique'),
+	(5, 'Gestion de projet'),
+	(6, 'Base de donnée');
 
 -- Listage de la structure de table sfsessions. formateur
 CREATE TABLE IF NOT EXISTS `formateur` (
@@ -39,11 +46,13 @@ CREATE TABLE IF NOT EXISTS `formateur` (
   `code_postal` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `ville` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table sfsessions.formateur : ~1 rows (environ)
+-- Listage des données de la table sfsessions.formateur : ~3 rows (environ)
 INSERT INTO `formateur` (`id`, `nom`, `prenom`, `date_naissance`, `tel`, `email`, `code_postal`, `ville`) VALUES
-	(1, 'FORMATEURMAN', 'Fabrice', '1972-04-23', '06 50 42 68 51', 'fabrice.formateurman@wanadoo.fr', '67000', 'STRASBOURG');
+	(1, 'FORMATEUR', 'Fabrice', '1972-04-23', '06 50 42 68 51', 'fabrice.formateurman@wanadoo.fr', '67000', 'STRASBOURG'),
+	(2, 'PEDAGOGIQUE', 'Benoit', '1993-02-10', '06 88 47 52 68', 'benoit.pedago@hotmail.com', '67200', 'STRASBOURG'),
+	(3, 'EDUCATION', 'Gérard', '1985-10-08', '06 88 47 52 68', 'gerard.education@gmail.com', '67000', 'STRASBOURG');
 
 -- Listage de la structure de table sfsessions. formation
 CREATE TABLE IF NOT EXISTS `formation` (
@@ -84,9 +93,16 @@ CREATE TABLE IF NOT EXISTS `module` (
   PRIMARY KEY (`id`),
   KEY `IDX_C242628BCF5E72D` (`categorie_id`),
   CONSTRAINT `FK_C242628BCF5E72D` FOREIGN KEY (`categorie_id`) REFERENCES `categorie` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table sfsessions.module : ~0 rows (environ)
+-- Listage des données de la table sfsessions.module : ~6 rows (environ)
+INSERT INTO `module` (`id`, `categorie_id`, `intitule_module`) VALUES
+	(1, 1, 'Introduction à l\'algorithmie'),
+	(2, 3, 'Découverte PHP'),
+	(3, 2, 'Découverte CSS'),
+	(4, 2, 'Projet intégration'),
+	(5, 6, 'Découverte SQL'),
+	(7, 5, 'Développer une appli web');
 
 -- Listage de la structure de table sfsessions. programme
 CREATE TABLE IF NOT EXISTS `programme` (
@@ -117,11 +133,15 @@ CREATE TABLE IF NOT EXISTS `session` (
   KEY `IDX_D044D5D4155D8F51` (`formateur_id`),
   CONSTRAINT `FK_D044D5D4155D8F51` FOREIGN KEY (`formateur_id`) REFERENCES `formateur` (`id`),
   CONSTRAINT `FK_D044D5D45200282E` FOREIGN KEY (`formation_id`) REFERENCES `formation` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table sfsessions.session : ~0 rows (environ)
+-- Listage des données de la table sfsessions.session : ~2 rows (environ)
 INSERT INTO `session` (`id`, `formation_id`, `formateur_id`, `intitule_session`, `nb_places`, `date_debut`, `date_fin`) VALUES
-	(1, 1, 1, 'DWWM_2_24_25', 6, '2024-04-23 00:00:00', '2025-02-21 00:00:00');
+	(1, 1, 1, 'DWWM_2_24_25', 5, '2024-04-23 00:00:00', '2025-02-21 00:00:00'),
+	(3, 4, 1, 'RAN_1_24', 6, '2024-01-04 00:00:00', '2024-04-04 00:00:00'),
+	(4, 2, 1, 'CDA_1_24_25', 6, '2024-04-22 00:00:00', '2024-10-25 00:00:00'),
+	(5, 3, 2, 'UIUX_1_24_25', 4, '2024-04-29 00:00:00', '2024-11-01 00:00:00'),
+	(6, 1, 3, 'DWWM_1_24_25', 6, '2024-03-04 00:00:00', '2024-12-06 00:00:00');
 
 -- Listage de la structure de table sfsessions. stagiaire
 CREATE TABLE IF NOT EXISTS `stagiaire` (
@@ -136,11 +156,13 @@ CREATE TABLE IF NOT EXISTS `stagiaire` (
   `ville` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `date_inscription` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table sfsessions.stagiaire : ~1 rows (environ)
 INSERT INTO `stagiaire` (`id`, `nom`, `prenom`, `date_naissance`, `tel`, `email`, `adresse`, `code_postal`, `ville`, `date_inscription`) VALUES
-	(1, 'MAGNIFIQUE', 'Marius', '1993-02-23', '06 61 25 47 83', 'marius.magnifique@gmail.com', '7 rue des Pamplemousses', '67000', 'STRASBOURG', '2024-04-23 11:20:50');
+	(1, 'MAGNIFIQUE', 'Marius', '1993-02-23', '06 61 25 47 83', 'marius.magnifique@gmail.com', '6 rue des Pamplemousses', '67000', 'STRASBOURG', '2024-04-23 11:20:50'),
+	(2, 'BINGBONG', 'Didier', '2004-05-06', '06 82 66 99 42', 'bing.bong@gmail.com', '32 rue bing bong', '26200', 'MONTELIMAR', '2024-04-24 12:28:31'),
+	(3, 'SALSIFI', 'Henri', '2001-09-11', '06 88 69 52 74', 'henri.salsifi@free.fr', '12 rue des Pantoufles', '67200', 'STRASBOURG', '2024-04-24 13:06:41');
 
 -- Listage de la structure de table sfsessions. stagiaire_session
 CREATE TABLE IF NOT EXISTS `stagiaire_session` (
@@ -153,7 +175,12 @@ CREATE TABLE IF NOT EXISTS `stagiaire_session` (
   CONSTRAINT `FK_D32D02D4BBA93DD6` FOREIGN KEY (`stagiaire_id`) REFERENCES `stagiaire` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table sfsessions.stagiaire_session : ~0 rows (environ)
+-- Listage des données de la table sfsessions.stagiaire_session : ~2 rows (environ)
+INSERT INTO `stagiaire_session` (`stagiaire_id`, `session_id`) VALUES
+	(1, 1),
+	(1, 3),
+	(2, 1),
+	(3, 6);
 
 -- Listage de la structure de table sfsessions. utilisateur
 CREATE TABLE IF NOT EXISTS `utilisateur` (
