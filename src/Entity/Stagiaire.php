@@ -195,4 +195,17 @@ class Stagiaire
     {
         return $this->prenom." ".$this->nom;
     }
+
+    public function getCurrentSession()
+    {
+        $now = new \DateTime();
+        foreach($this->sessions as $session){
+            if($session->getDateDebut() <= $now && $session->getDateFin() >= $now){
+                return $session;
+            }
+            else{
+                return "Aucune session en cours";
+            }
+        }
+    }
 }
