@@ -39,7 +39,8 @@
                     <tbody>
                         {% for stagiaire in session.stagiaires %}
                             <tr>
-                                <td>{{ stagiaire }}</td>
+                                <td>
+                                    {{ stagiaire }} <a href="{{ path('remove_stagiaire', {'id': session.id, 'stagiaireId':stagiaire.id}) }}"><i class="fa-solid fa-minus"></i></a></td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -47,14 +48,23 @@
             {% endif %}
         </div>
         
-        <div class="pb-3">
-            <h3>Inscrire un stagiaire à cette session</h3>
-            {% for stagiaire in stagiaires %}
-                {{ stagiaire }} <a href="">+</a>
-            {% endfor %}
-        </div>
+        {% if edit %}
+            <div class="pb-5">
+                <h3>Inscrire un stagiaire à cette session</h3>
+                {% for stagiaire in stagiaires %}
+                    {{ stagiaire }} <a href="{{ path('add_stagiaire', {'id': session.id, 'stagiaireId':stagiaire.id}) }}"><i class="fa-solid fa-plus"></i></a>
+                {% endfor %}
+            </div>
+        {% endif %}
         
-        
+        {% if edit %}
+            <div class="pt-2 pb-3">
+                <a href="{{ path('delete_session', {'id': session.id}) }}">
+                    <button class="btn btn-danger">Suprimmer</button>
+                </a>
+            </div>
+        {% endif %}
+    
     </main>
 
    
