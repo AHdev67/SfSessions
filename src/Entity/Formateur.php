@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\FormateurRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\FormateurRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: FormateurRepository::class)]
 class Formateur
@@ -170,5 +171,18 @@ class Formateur
     public function __toString()
     {
         return $this->prenom." ".$this->nom;
+    }
+
+    public function getCurrentSession()
+    {
+        $now = new DateTime();
+        foreach($this->sessions as $session){
+            if($session->getDateDebut() <= $now && $session->getDateFin() >= $now){
+                return $session;
+            }
+            else{
+                return "Aucune session en cours";
+            }
+        }
     }
 }
