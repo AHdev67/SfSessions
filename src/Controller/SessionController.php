@@ -10,12 +10,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class SessionController extends AbstractController
 {
     //----------------------------------------------
-    //METHODE SHOW QUI RENVOIE LA LISTE DES SESSIONS
+    //METHODE INDEX QUI RENVOIE LA LISTE DES SESSIONS
     //----------------------------------------------
     #[Route('/session', name: 'app_session')]
     public function index(SessionRepository $sessionRepository): Response
@@ -69,7 +70,7 @@ class SessionController extends AbstractController
     //METHODE ADD QUI INSCRIT UN STAGIAIRE A UNE SESSION
     //--------------------------------------------------
     #[Route('/session/{id}/edit/{stagiaireId}/add', name: 'add_stagiaire')]
-    public function add(Session $session, Stagiaire $stagiaire, EntityManagerInterface $entityManager)
+    public function add(Session $session, #[MapEntity(id: 'stagiaireId')] Stagiaire $stagiaire, EntityManagerInterface $entityManager)
     {
         $session->addStagiaire($stagiaire);
 
@@ -79,9 +80,9 @@ class SessionController extends AbstractController
         return $this->redirectToRoute('edit_session', ['id'=>$session->getId()]);
     }
 
-    //--------------------------------------------------------------
+    //------------------------------------------------------------
     //METHODE REMOVE QUI DESINSCRIT UN STAGIAIRE D'UNE UNE SESSION
-    //--------------------------------------------------------------
+    //------------------------------------------------------------
     #[Route('/session/{id}/edit/{stagiaireId}/remove', name: 'remove_stagiaire')]
     public function remove(Session $session, Stagiaire $stagiaire, EntityManagerInterface $entityManager)
     {
@@ -96,7 +97,7 @@ class SessionController extends AbstractController
     //---------------------------------------
     //METHODE DELETE QUI SUPPRIME UNE SESSION
     //---------------------------------------
-    #[Route('/session/{id}/{stagiaireId}/delete', name: 'delete_session')]
+    #[Route('/session/{id}/delete', name: 'delete_session')]
     public function delete(Session $session, EntityManagerInterface $entityManager)
     {
         $entityManager->remove($session);
