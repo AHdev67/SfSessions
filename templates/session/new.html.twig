@@ -9,7 +9,7 @@
         {% else %}
             <h1 class="display-5 fw-bold text-body-emphasis mb-5">Ajouter une session :</h1>
         {% endif %}
-        <div class="mainInfo pb-3">
+        <div class="mainInfo pb-5  d-flex align-items-start">
             <div class="infoForm">
                 {{ form_start(formAddSession) }}
                     {{ form_row(formAddSession.formation) }}
@@ -51,9 +51,11 @@
         {% if edit %}
             <div class="pb-5">
                 <h3>Inscrire un stagiaire à cette session</h3>
+                <ul>
                 {% for stagiaire in stagiaires %}
-                    {{ stagiaire }} <a href="{{ path('add_stagiaire', {'id': session.id, 'stagiaireId':stagiaire.id}) }}"><i class="fa-solid fa-plus"></i></a>
+                    <li>{{ stagiaire }} <a href="{{ path('add_stagiaire', {'id': session.id, 'stagiaireId':stagiaire.id}) }}"><i class="fa-solid fa-plus"></i></a></li>
                 {% endfor %}
+                </ul>
             </div>
         {% endif %}
         
