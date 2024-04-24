@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use DateTime;
+use App\Entity\Session;
 use App\Entity\Stagiaire;
 use App\Form\StagiaireType;
 use App\Repository\StagiaireRepository;
@@ -9,7 +11,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class StagiaireController extends AbstractController
@@ -38,10 +39,6 @@ class StagiaireController extends AbstractController
             $stagiaire = new Stagiaire();
             $sessions = null;
         }
-        else{
-            $sessionRepo = $entityManager->getRepository(Session::class);
-            $stagiaires = $sessionRepo->findAll();
-        }
 
         $form = $this->createForm(StagiaireType::class, $stagiaire);
 
@@ -49,19 +46,32 @@ class StagiaireController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             
             $stagiaire = $form->getData();
+            $stagiaire -> setDateInscription(new DateTime());
             //equivalent PDO prepare
             $entityManager->persist($stagiaire);
             //equivalent PDO execute
             $entityManager->flush();
 
-            return $this->redirectToRoute('add_stagiaire');
+            return $this->redirectToRoute('app_stagiaire');
         }
 
         return $this->render('stagiaire/new.html.twig', [
             'formAddStagiaire' => $form,
             'edit' => $stagiaire->getId(),
-            'sessions'=>$sessions,
             'stagiaire'=>$stagiaire
         ]);
     }
+
+    //----------------------------------------
+    //METHODE DELETE QUI SUPPRIME UN STAGIAIRE
+    //----------------------------------------
+    #[Route('/stagiaire/{id}/delete', name: 'delete_stagiaire')]
+    public function delete(Stagiaire $stagiaire, EntityManagerInterface $entityManager)
+    {
+        $entityManager->remove($stagiaire);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_stagiaire');
+    }
+
 }
