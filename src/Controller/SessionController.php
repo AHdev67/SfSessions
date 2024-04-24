@@ -94,6 +94,32 @@ class SessionController extends AbstractController
         return $this->redirectToRoute('edit_session', ['id'=>$session->getId()]);
     }
 
+    //----------------------------------------------------
+    //METHODE PROGRAMMER QUI AJOUTE UN MODULE A LA SESSION
+    //----------------------------------------------------
+    #[Route('/session/{id}/programmer')]
+    public function programmer(Session $session, Request $request, EntityManagerInterface $entityManager)
+    {
+        // $form = $this->createForm(SessionType::class, $session);
+
+        // $form->handleRequest($request);
+        // if ($form->isSubmitted() && $form->isValid()) {
+            
+        //     $session = $form->getData();
+        //     //equivalent PDO prepare
+        //     $entityManager->persist($session);
+        //     //equivalent PDO execute
+        //     $entityManager->flush();
+
+        //     return $this->redirectToRoute('app_session');
+        // }
+
+        // return $this->render('session/new.html.twig', [
+        //     'formAddSession' => $form,
+        //     'edit' => $session->getId(),
+        // ]);
+    }
+
     //---------------------------------------
     //METHODE DELETE QUI SUPPRIME UNE SESSION
     //---------------------------------------
