@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Formulaire formateur{% endblock %}
+
+{% block body %}
+    <main class="container py-3">
+        {% if edit %}
+            <h1 class="display-5 fw-bold text-body-emphasis mb-5">Information formateur</h1>
+        {% else %}
+            <h1 class="display-5 fw-bold text-body-emphasis mb-5">Ajouter une formateur :</h1>
+        {% endif %}
+        <div class="mainInfo pb-3 d-flex align-items-start">
+            <div class="infoForm">
+                {{ form_start(formAddFormateur) }}
+                    {{ form_row(formAddFormateur.nom) }}
+                    {{ form_row(formAddFormateur.prenom) }}
+                    {{ form_row(formAddFormateur.dateNaissance) }}
+                    {{ form_row(formAddFormateur.tel) }}
+                    {{ form_row(formAddFormateur.email) }}
+                    <div class="row">
+                        <div class="col-sm">
+                            {{ form_row(formAddFormateur.codePostal) }}
+                        </div>
+                        <div class="col-sm">
+                            {{ form_row(formAddFormateur.ville) }}
+                        </div>
+                    </div>
+                    {{ form_row(formAddFormateur.valider) }}
+                {{ form_end(formAddFormateur) }}
+            </div>
+
+            {% if edit %}
+                <table class="table mt-3">
+                    <thead>
+                        <tr>
+                            <th>En charge des sessions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for session in formateur.sessions %}
+                            <tr>
+                                <td>{{ session }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+        
+        {% if edit %}
+            <div class="pt-2 pb-3">
+                <a href="{{ path('delete_formateur', {'id': formateur.id}) }}">
+                    <button class="btn btn-danger">Suprimmer</button>
+                </a>
+            </div>
+        {% endif %}
+    
+    </main>
+
+   
+{% endblock %}
