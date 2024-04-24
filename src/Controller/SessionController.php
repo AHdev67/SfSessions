@@ -65,15 +65,38 @@ class SessionController extends AbstractController
         ]);
     }
 
-    #[Route('/session/{id}/add')]
-    public function add(){
-        //code goes here
+    //--------------------------------------------------
+    //METHODE ADD QUI INSCRIT UN STAGIAIRE A UNE SESSION
+    //--------------------------------------------------
+    #[Route('/session/{id}/edit/{stagiaireId}/add', name: 'add_stagiaire')]
+    public function add(Session $session, Stagiaire $stagiaire, EntityManagerInterface $entityManager)
+    {
+        $session->addStagiaire($stagiaire);
+
+        $entityManager->persist($session);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('edit_session', ['id'=>$session->getId()]);
+    }
+
+    //--------------------------------------------------------------
+    //METHODE REMOVE QUI DESINSCRIT UN STAGIAIRE D'UNE UNE SESSION
+    //--------------------------------------------------------------
+    #[Route('/session/{id}/edit/{stagiaireId}/remove', name: 'remove_stagiaire')]
+    public function remove(Session $session, Stagiaire $stagiaire, EntityManagerInterface $entityManager)
+    {
+        $session->removeStagiaire($stagiaire);
+
+        $entityManager->persist($session);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('edit_session', ['id'=>$session->getId()]);
     }
 
     //---------------------------------------
     //METHODE DELETE QUI SUPPRIME UNE SESSION
     //---------------------------------------
-    #[Route('/session/{id}/delete', name: 'delete_session')]
+    #[Route('/session/{id}/{stagiaireId}/delete', name: 'delete_session')]
     public function delete(Session $session, EntityManagerInterface $entityManager)
     {
         $entityManager->remove($session);
