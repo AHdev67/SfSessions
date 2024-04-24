@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Formulaire session{% endblock %}
+
+{% block body %}
+    <main class="container py-3">
+        {% if edit %}
+            <h1 class="display-5 fw-bold text-body-emphasis mb-5">Information session</h1>
+        {% else %}
+            <h1 class="display-5 fw-bold text-body-emphasis mb-5">Ajouter une session :</h1>
+        {% endif %}
+        <div class="mainInfo pb-3">
+            <div class="infoForm">
+                {{ form_start(formAddSession) }}
+                    {{ form_row(formAddSession.formation) }}
+                    {{ form_row(formAddSession.intituleSession) }}
+                    {{ form_row(formAddSession.nbPlaces) }}
+                    <div class="row">
+                        <div class="col-sm">
+                            {{ form_row(formAddSession.dateDebut) }}
+                        </div>
+                        <div class="col-sm">
+                            {{ form_row(formAddSession.dateFin) }}
+                        </div>
+                    </div>
+                    {# {{ form_row(formAddSession.stagiaires) }} #}
+                    {{ form_row(formAddSession.formateur) }}
+                    {{ form_row(formAddSession.valider) }}
+                {{ form_end(formAddSession) }}
+            </div>
+
+            {% if edit %}
+                <table class="table mt-3">
+                    <thead>
+                        <tr>
+                            <th>Stagiaires inscrits</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for stagiaire in session.stagiaires %}
+                            <tr>
+                                <td>
+                                    {{ stagiaire }} <a href="{{ path('remove_stagiaire', {'id': session.id, 'stagiaireId':stagiaire.id}) }}"><i class="fa-solid fa-minus"></i></a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+        
+        {% if edit %}
+            <div class="pb-5">
+                <h3>Inscrire un stagiaire à cette session</h3>
+                {% for stagiaire in stagiaires %}
+                    {{ stagiaire }} <a href="{{ path('add_stagiaire', {'id': session.id, 'stagiaireId':stagiaire.id}) }}"><i class="fa-solid fa-plus"></i></a>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        {% if edit %}
+            <div class="pt-2 pb-3">
+                <a href="{{ path('delete_session', {'id': session.id}) }}">
+                    <button class="btn btn-danger">Suprimmer</button>
+                </a>
+            </div>
+        {% endif %}
+    
+    </main>
+
+   
+{% endblock %}
