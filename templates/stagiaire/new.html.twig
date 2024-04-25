@@ -28,35 +28,42 @@
                     </div>
                     {{ form_row(formAddStagiaire.valider) }}
                 {{ form_end(formAddStagiaire) }}
+
+                {% if edit %}
+                    <div class="mb-5 mt-5">
+                        <a href="{{ path('delete_stagiaire', {'id': stagiaire.id}) }}">
+                            <button class="btn btn-danger">Suprimmer</button>
+                        </a>
+                    </div>
+                {% endif %}
             </div>
 
             {% if edit %}
-                <table class="table mt-3">
-                    <thead>
-                        <tr>
-                            <th>Inscriptions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for session in stagiaire.sessions %}
+                <div class="ms-5">
+                    <h3>Inscrit à cette(ces) session(s)</h3>
+                    <table class="table">
+                        <thead>
                             <tr>
-                                <td>{{ session }}</td>
+                                <th>Formation</th>
+                                <th>Intitulé session</th>
+                                <th>Date début</th>
+                                <th>Date fin</th>
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {% for session in stagiaire.sessions %}
+                                <tr>
+                                    <td>{{ session.formation }}</td>
+                                    <td>{{ session }}</td>
+                                    <td>{{ session.dateDebut | date("d/m/Y") }}</td>
+                                    <td>{{ session.dateFin | date("d/m/Y") }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             {% endif %}
         </div>
-        
-        {% if edit %}
-            <div class="pt-2 pb-3">
-                <a href="{{ path('delete_stagiaire', {'id': stagiaire.id}) }}">
-                    <button class="btn btn-danger">Suprimmer</button>
-                </a>
-            </div>
-        {% endif %}
     
     </main>
-
-   
 {% endblock %}

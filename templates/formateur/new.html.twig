@@ -27,35 +27,42 @@
                     </div>
                     {{ form_row(formAddFormateur.valider) }}
                 {{ form_end(formAddFormateur) }}
+
+                {% if edit %}
+                    <div class="mb-5 mt-5">
+                        <a href="{{ path('delete_formateur', {'id': formateur.id}) }}">
+                            <button class="btn btn-danger">Suprimmer</button>
+                        </a>
+                    </div>
+                {% endif %}
             </div>
 
             {% if edit %}
-                <table class="table mt-3 ms-5">
-                    <thead>
-                        <tr>
-                            <th>En charge des sessions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for session in formateur.sessions %}
+                <div class="ms-5">
+                    <h3>En charge de cette(ces) session(s)</h3>
+                    <table class="table">
+                        <thead>
                             <tr>
-                                <td>{{ session }}</td>
+                                <th>Session</th>
+                                <th>Date début</th>
+                                <th>Date fin</th>
+                                <th>Nb stagiaires</th>
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {% for session in formateur.sessions %}
+                                <tr>
+                                    <td>{{ session }}</td>
+                                    <td>{{ session.dateDebut | date("d/m/Y") }}</td>
+                                    <td>{{ session.dateFin | date("d/m/Y") }}</td>
+                                    <td>{{ session.nbStagiaires }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             {% endif %}
         </div>
-        
-        {% if edit %}
-            <div class="pt-2 pb-3">
-                <a href="{{ path('delete_formateur', {'id': formateur.id}) }}">
-                    <button class="btn btn-danger">Suprimmer</button>
-                </a>
-            </div>
-        {% endif %}
     
     </main>
-
-   
 {% endblock %}
