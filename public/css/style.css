@@ -46,14 +46,9 @@ table th, td{
 }
 
 .mainInfo{
-    gap: 50px;
-    width: 66vw;
-}
-
-.infoForm{
-    width: 33vw;
+    width: 60vw;
 }
 
 .mainInfo table{
-    width: 33vh;
+    width: 300px;
 }

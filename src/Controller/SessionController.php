@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Programme;
 use App\Entity\Session;
 use App\Entity\Stagiaire;
+use App\Form\ProgrammeType;
 use App\Form\SessionType;
 use App\Repository\SessionRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -33,8 +35,10 @@ class SessionController extends AbstractController
     //---------------------------------------------------------------------------------
     #[Route('/session/new', name: 'new_session')]
     #[Route('/session/{id}/edit', name: 'edit_session')]
-    public function new_edit(Session $session = null, Request $request, EntityManagerInterface $entityManager): Response
+    public function new_edit(Session $session = null,  Request $request, EntityManagerInterface $entityManager): Response
     {
+        // dump($session->getProgrammeSession());
+
         if(!$session){
             $session = new Session();
             $stagiaires = null;
@@ -42,6 +46,27 @@ class SessionController extends AbstractController
         else{
             $stagiaireRepo = $entityManager->getRepository(Stagiaire::class);
             $stagiaires = $stagiaireRepo->findAll();
+            $programmeRepo =$entityManager->getRepository(Programme::class);
+            $programmes = $programmeRepo->findAll();
+
+            $programme = new Programme(); 
+
+            $formProgramme = $this->createForm(ProgrammeType::class, $programme);
+
+            $formProgramme->handleRequest($request);
+            if ($formProgramme->isSubmitted() && $formProgramme->isValid()) {
+                // dump($session->getProgrammeSession());
+                $programme = $formProgramme->getData();
+                
+                $entityManager->persist($programme);
+
+                $session->addProgrammeSession($programme);
+                $entityManager->persist($session);
+                $entityManager->flush();
+                // dd($session->getProgrammeSession());
+
+                return $this->redirectToRoute('edit_session', ['id'=>$session->getId()]);
+            }
         }
 
         $form = $this->createForm(SessionType::class, $session);
@@ -61,9 +86,25 @@ class SessionController extends AbstractController
         return $this->render('session/new.html.twig', [
             'formAddSession' => $form,
             'edit' => $session->getId(),
+            'formAddModule' => $formProgramme,
             'stagiaires'=>$stagiaires,
+            'programmes'=>$programmes,
             'session'=>$session
         ]);
+    }
+
+    //-------------------------------------------------------
+    //METHODE DEPROGRAMMER QUI RETIRE UN MODULE DE LA SESSION
+    //-------------------------------------------------------
+    #[Route('/session/{id}/edit/{programmeId}/deprogrammer', name: 'deprogrammer_module')]
+    public function deprogrammer(Session $session, Programme $programme, EntityManagerInterface $entityManager)
+    {
+        $session->removeProgrammeSession($programme);
+
+        $entityManager->persist($session);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('edit_session', ['id'=>$session->getId()]);
     }
 
     //--------------------------------------------------
@@ -92,32 +133,6 @@ class SessionController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute('edit_session', ['id'=>$session->getId()]);
-    }
-
-    //----------------------------------------------------
-    //METHODE PROGRAMMER QUI AJOUTE UN MODULE A LA SESSION
-    //----------------------------------------------------
-    #[Route('/session/{id}/programmer')]
-    public function programmer(Session $session, Request $request, EntityManagerInterface $entityManager)
-    {
-        // $form = $this->createForm(SessionType::class, $session);
-
-        // $form->handleRequest($request);
-        // if ($form->isSubmitted() && $form->isValid()) {
-            
-        //     $session = $form->getData();
-        //     //equivalent PDO prepare
-        //     $entityManager->persist($session);
-        //     //equivalent PDO execute
-        //     $entityManager->flush();
-
-        //     return $this->redirectToRoute('app_session');
-        // }
-
-        // return $this->render('session/new.html.twig', [
-        //     'formAddSession' => $form,
-        //     'edit' => $session->getId(),
-        // ]);
     }
 
     //---------------------------------------

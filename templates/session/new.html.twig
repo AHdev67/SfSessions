@@ -9,8 +9,10 @@
         {% else %}
             <h1 class="display-5 fw-bold text-body-emphasis mb-5">Ajouter une session :</h1>
         {% endif %}
+
         <div class="mainInfo pb-5  d-flex align-items-start">
-            <div class="infoForm">
+
+            <div class="infoForm me-5">
                 {{ form_start(formAddSession) }}
                     {{ form_row(formAddSession.formation) }}
                     {{ form_row(formAddSession.intituleSession) }}
@@ -27,45 +29,84 @@
                     {{ form_row(formAddSession.formateur) }}
                     {{ form_row(formAddSession.valider) }}
                 {{ form_end(formAddSession) }}
+
+                {% if edit %}
+                    <div class="mt-5 mb-5">
+                        <a href="{{ path('delete_session', {'id': session.id}) }}">
+                            <button class="btn btn-danger">Suprimmer cette session</button>
+                        </a>
+                    </div>
+                {% endif %}
             </div>
 
             {% if edit %}
-                <table class="table mt-3">
-                    <thead>
-                        <tr>
-                            <th>Stagiaires inscrits</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for stagiaire in session.stagiaires %}
+            <div class="d-flex flex-column">
+            
+                <div class="sideTables d-flex mb-3">
+
+                    <table class="table me-5">
+                        <thead>
                             <tr>
-                                <td>
-                                    {{ stagiaire }} <a href="{{ path('remove_stagiaire', {'id': session.id, 'stagiaireId':stagiaire.id}) }}"><i class="fa-solid fa-minus"></i></a></td>
+                                <th>Stagiaires inscrits</th>
+                                <th></th>
                             </tr>
+                        </thead>
+                        <tbody>
+                            {% for stagiaire in session.stagiaires %}
+                                <tr>
+                                    <td>{{ stagiaire }}</td>
+                                    <td>
+                                        <a href="{{ path('remove_stagiaire', {'id': session.id, 'stagiaireId':stagiaire.id}) }}"><i class="fa-solid fa-minus"></i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Module</th>
+                                <th>Durée</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for programme in session.programmeSession %}
+                                <tr>
+                                    <td>{{ programme }}</td>
+                                    <td>{{ programme.dureeModule }}h</td>
+                                    <td><a href="{{ path('deprogrammer_module', {'id': session.id, 'programmeId':programme.id}) }}"><i class="fa-solid fa-minus"></i></a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="sideForms d-flex">
+                    
+                    <div class="pb-3 me-5">
+                        <h3>Inscrire un stagiaire</h3>
+                        <ul>
+                        {% for stagiaire in stagiaires %}
+                            <li><a href="{{ path('add_stagiaire', {'id': session.id, 'stagiaireId':stagiaire.id}) }}"><i class="fa-solid fa-plus"></i></a> {{ stagiaire }}</li>
                         {% endfor %}
-                    </tbody>
-                </table>
+                        </ul>
+                    </div>
+                        
+                    <div class="pb-3">
+                        <h3>Ajouter un module</h3>
+                        {{ form_start(formAddModule) }}
+                            {{ form_row(formAddModule.module) }}
+                            {{ form_row(formAddModule.dureeModule) }}
+                            {{ form_row(formAddModule.ajouter) }}
+                        {{ form_end(formAddModule) }}
+                    </div>
+                </div>
+
+            </div>
             {% endif %}
         </div>
-        
-        {% if edit %}
-            <div class="pb-5">
-                <h3>Inscrire un stagiaire à cette session</h3>
-                <ul>
-                {% for stagiaire in stagiaires %}
-                    <li>{{ stagiaire }} <a href="{{ path('add_stagiaire', {'id': session.id, 'stagiaireId':stagiaire.id}) }}"><i class="fa-solid fa-plus"></i></a></li>
-                {% endfor %}
-                </ul>
-            </div>
-        {% endif %}
-        
-        {% if edit %}
-            <div class="pt-2 pb-3">
-                <a href="{{ path('delete_session', {'id': session.id}) }}">
-                    <button class="btn btn-danger">Suprimmer</button>
-                </a>
-            </div>
-        {% endif %}
     
     </main>
 
