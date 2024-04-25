@@ -52,14 +52,6 @@ class SessionType extends AbstractType
                     'class' => 'form-control mb-3'
                 ]
             ])
-
-            // ->add('stagiaires', EntityType::class, [
-            //     'class' => Stagiaire::class,
-            //     'multiple' => true,
-            //     'attr' => [
-            //         'class' => 'form-control mb-3'
-            //     ]
-            // ])
             
             ->add('formateur', EntityType::class, [
                 'class' => Formateur::class,
