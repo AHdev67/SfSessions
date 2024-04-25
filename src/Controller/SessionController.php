@@ -42,6 +42,8 @@ class SessionController extends AbstractController
         if(!$session){
             $session = new Session();
             $stagiaires = null;
+            $programmes = null;
+            $formProgramme = null;
         }
         else{
             $stagiaireRepo = $entityManager->getRepository(Stagiaire::class);
@@ -75,12 +77,40 @@ class SessionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             
             $session = $form->getData();
-            //equivalent PDO prepare
-            $entityManager->persist($session);
-            //equivalent PDO execute
-            $entityManager->flush();
 
-            return $this->redirectToRoute('app_session');
+            if ($session->getDateDebut() < $session->getDateFin())
+            {
+                if ($session->getNbPlaces() > 0)
+                {
+                    //equivalent PDO prepare
+                    $entityManager->persist($session);
+                    //equivalent PDO execute
+                    $entityManager->flush();
+
+                    return $this->redirectToRoute('app_session');
+                }
+                else
+                {
+                    // dd("ok");
+                    // $request->getSession()->getFlashBag()->add('notice', 'Hello world');
+
+                    $this->addFlash(
+                            'notice', 
+                            'Hello world'
+                    );
+                    return $this->redirectToRoute("new_session");
+                        
+                    } 
+                }
+                else
+                {
+                    $this->addFlash(
+                        'warning', 
+                        'Date de début invalide !'
+                    );
+                    return $this->redirectToRoute("new_session");
+            }
+            
         }
 
         return $this->render('session/new.html.twig', [
