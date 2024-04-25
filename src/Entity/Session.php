@@ -197,4 +197,9 @@ class Session
     {
         return $this->nbPlaces - count($this->stagiaires);
     }
+
+    public function getNbStagiaires(): ?int
+    {
+        return count($this->stagiaires);
+    }
 }
