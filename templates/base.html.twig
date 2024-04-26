@@ -23,11 +23,12 @@
                 </a>
             </div>
 
-            
             <div class="me-3 d-flex" style="gap: 10px;">
                 {% if app.user %}
-                   {% if is_granted('ROLE_ADMIN') %}
-                        bingbong
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('app_users') }}">
+                            <button class="btn btn-outline-dark">Liste des utilisateurs</button>
+                        </a>
                     {% endif %}
                     <a href="{{ path('app_logout') }}">
                         <button class="btn btn-outline-dark">Déconnexion</button>
@@ -35,7 +36,12 @@
                     <a href="">
                         <button class="btn btn-outline-dark" style="border-radius: 100%; background-color:#39394D"><i class="fa-solid fa-user" style="color: white;"></i></button>
                     </a>
-                {% endif %} 
+                {% else %}
+                    <div class="mb-3">
+                        <a href="{{ path('app_login') }}"><button class="btn btn-outline-dark">Login</button></a>
+                        <a href="{{ path('app_register') }}"><button class="btn btn-outline-dark">Register</button></a>
+                    </div>
+                {% endif %}
             </div>
             
         </header>
@@ -45,14 +51,6 @@
             <div class="sidebar d-flex flex-column flex-shrink-0 text-bg-dark">
         
                 <ul class="nav flex-column mb-auto ps-3">
-                    <li>
-                        <a href="" class="nav-link text-white"><i class="fa-solid fa-list"></i> Formations</a>
-                    </li>
-                    <hr>
-                    <li>
-                        <a href="" class="nav-link text-white"><i class="fa-solid fa-list"></i> Modules</a>
-                    </li>
-                    <hr>
                     <li>
                         <span class="nav-link text-white"><b>Sessions</b></span>
                         <a href="{{ path('app_session') }}" class="nav-link text-white ms-3"><i class="fa-solid fa-list"></i> Liste des sessions</a>
@@ -85,7 +83,15 @@
                     {% endfor %}
                 </div>
                 
-                {% block body %}{% endblock %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    {% block body %}{% endblock %}
+                {% else %}
+                    <p>
+                        Vous n'avez pas le role d'administrateur, vous ne pouvez donc pas accéder aux fonctionnalités du site. <br>
+                        Veuillez contacter un administrateur à cette adresse : <a href="mailto:sf.sessions@contact.fr">sf.sessions@contact.fr</a>
+                    </p>
+                {% endif %}
+                
             </div>
             
         </div>
