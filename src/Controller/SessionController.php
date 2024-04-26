@@ -123,7 +123,7 @@ class SessionController extends AbstractController
     //METHODE DEPROGRAMMER QUI RETIRE UN MODULE DE LA SESSION
     //-------------------------------------------------------
     #[Route('/session/{id}/edit/{programmeId}/deprogrammer', name: 'deprogrammer_module')]
-    public function deprogrammer(Session $session, Programme $programme, EntityManagerInterface $entityManager)
+    public function deprogrammer(Session $session, #[MapEntity(id: 'programmeId')] Programme $programme, EntityManagerInterface $entityManager)
     {
         $session->removeProgrammeSession($programme);
 
@@ -151,7 +151,7 @@ class SessionController extends AbstractController
     //METHODE REMOVE QUI DESINSCRIT UN STAGIAIRE D'UNE UNE SESSION
     //------------------------------------------------------------
     #[Route('/session/{id}/edit/{stagiaireId}/remove', name: 'remove_stagiaire')]
-    public function remove(Session $session, Stagiaire $stagiaire, EntityManagerInterface $entityManager)
+    public function remove(Session $session, #[MapEntity(id: 'stagiaireId')] Stagiaire $stagiaire, EntityManagerInterface $entityManager)
     {
         $session->removeStagiaire($stagiaire);
 
