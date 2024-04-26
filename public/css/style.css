@@ -36,20 +36,12 @@ header{
 }
 
 .sidecontent{
-    margin-top: 100px;
+    margin-top: 60px;
     margin-left: 250px;
-    padding: 30px;
+    padding: 60px;
+    width: 100%;
 }
 
-.mainInfo{
-    width: 60vw;
+table{
+    text-align: center;
 }
-
-.flashes {
-    position: absolute;
-    top:80px;
-    left: 50%;
-    background: red;
-    z-index: 99;
-}
-
