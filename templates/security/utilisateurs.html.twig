@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des utilisateurs{% endblock %}
+
+{% block body %}
+    <main class="container p-3">
+        <h1 class="display-5 fw-bold text-body-emphasis mb-5">Gestion des utilisateurs :</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom d'utilisateur</th>
+                    <th>e-mail</th>
+                    <th>Roles</th>
+                    <th colspan="2">Action administrateur</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for utilisateur in utilisateurs %}
+                    <tr>
+                        <td>{{ utilisateur }}</td>
+                        <td>{{ utilisateur.email }}</td>
+                        <td>
+                            {% for role in utilisateur.roles %}
+                                {{ role }}
+                            {% endfor %}
+                        </td>
+                        <td>
+                            <a href="{{ path('grant_admin', {'id': utilisateur.id}) }}">
+                                <button class="btn {{ utilisateur.action[0] }}">{{ utilisateur.action[1] }}</button>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table class="table">
+    </main>
+    
+{% endblock %}
