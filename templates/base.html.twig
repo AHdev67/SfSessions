@@ -14,16 +14,6 @@
     <body>
         <header class="d-flex align-items-center justify-content-between fixed-top bg-light">
 
-            <div class="flashes">
-                {% for label, messages in app.flashes %}
-                    {% for message in messages %}
-                        <div class="flash-{{ label }}">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                {% endfor %}
-            </div>
-
             <div class="titlecontainer">
                 <a href="" class="d-flex align-items-center mb-5 mb-md-0 me-md-auto text-white text-decoration-none">
                     <div class="title">
@@ -84,6 +74,16 @@
             </div>
 
             <div class="sidecontent">
+
+                <div class="flashes">
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="flash-{{ label }} alert alert-danger" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
                 
                 {% block body %}{% endblock %}
             </div>
