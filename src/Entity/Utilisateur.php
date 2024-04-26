@@ -137,4 +137,36 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->prenom." ".$this->nom;
+    }
+
+    public function getAction(): ?array
+    {
+        if (in_array("ROLE_ADMIN", $this->getRoles()))
+        {
+            $action = ["btn-danger", "Retirer rôle ADMIN"];
+        }
+        else
+        {
+            $action = ["btn-success", "Donner rôle ADMIN"];
+        }
+        return $action;
+    }
+
+    public function addRole($role)
+    {
+        $this->roles[] = $role;
+        
+        return $this;
+    }
+
+    public function removeRole($role)
+    {
+        array_splice($this->roles, array_search($role, $this->roles ), 1);
+
+        return $this;
+    }
 }
