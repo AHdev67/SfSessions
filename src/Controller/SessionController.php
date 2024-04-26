@@ -91,24 +91,20 @@ class SessionController extends AbstractController
                 }
                 else
                 {
-                    // dd("ok");
-                    // $request->getSession()->getFlashBag()->add('notice', 'Hello world');
-
                     $this->addFlash(
-                            'notice', 
-                            'Hello world'
+                            'warning', 
+                            'Nombre de places invalide ! : Le nombre de places doit être > à 0.'
                     );
                     return $this->redirectToRoute("new_session");
-                        
-                    } 
                 }
-                else
-                {
-                    $this->addFlash(
-                        'warning', 
-                        'Date de début invalide !'
-                    );
-                    return $this->redirectToRoute("new_session");
+            }
+            else
+            {
+                $this->addFlash(
+                    'warning', 
+                    'Date de début invalide ! : La date de début doit précéder la date de fin.'
+                );
+                return $this->redirectToRoute("new_session");
             }
             
         }
