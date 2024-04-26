@@ -3,13 +3,13 @@
 {% block title %}Formulaire formateur{% endblock %}
 
 {% block body %}
-    <main class="container py-3">
+    <main class="container">
         {% if edit %}
             <h1 class="display-5 fw-bold text-body-emphasis mb-5">Information formateur</h1>
         {% else %}
             <h1 class="display-5 fw-bold text-body-emphasis mb-5">Ajouter une formateur :</h1>
         {% endif %}
-        <div class="mainInfo pb-3 d-flex align-items-start">
+        <div class="mainInfo pb-3 d-flex align-items-start justify-content-between">
             <div class="infoForm">
                 {{ form_start(formAddFormateur) }}
                     {{ form_row(formAddFormateur.nom) }}
@@ -38,7 +38,7 @@
             </div>
 
             {% if edit %}
-                <div class="ms-5">
+                <div class="pb-3">
                     <h3>En charge de cette(ces) session(s)</h3>
                     <table class="table">
                         <thead>

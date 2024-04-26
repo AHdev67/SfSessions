@@ -3,16 +3,16 @@
 {% block title %}Formulaire session{% endblock %}
 
 {% block body %}
-    <main class="container py-3">
+    <main class="container">
         {% if edit %}
             <h1 class="display-5 fw-bold text-body-emphasis mb-5">Information session</h1>
         {% else %}
             <h1 class="display-5 fw-bold text-body-emphasis mb-5">Ajouter une session :</h1>
         {% endif %}
 
-        <div class="mainInfo pb-5  d-flex align-items-start justify-content-evenly">
+        <div class="mainInfo pb-5  d-flex align-items-start justify-content-between">
 
-            <div class="infoForm me-5">
+            <div class="infoForm">
                 {{ form_start(formAddSession) }}
                     {{ form_row(formAddSession.formation) }}
                     {{ form_row(formAddSession.intituleSession) }}
@@ -40,7 +40,7 @@
             </div>
 
             {% if edit %}
-                <div class="sideForm d-flex flex-column mb-3 me-5">
+                <div class="sideForm d-flex flex-column mb-3">
 
                     <div class="pb-3">
                         <h3>Inscrire un stagiaire</h3>
