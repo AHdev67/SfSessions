@@ -47,12 +47,22 @@ class StagiaireController extends AbstractController
             
             $stagiaire = $form->getData();
             $stagiaire -> setDateInscription(new DateTime());
-            //equivalent PDO prepare
-            $entityManager->persist($stagiaire);
-            //equivalent PDO execute
-            $entityManager->flush();
+            $now = new DateTime();
+            if ($stagiaire->getDateNaissance() < $now)
+            {
+                $entityManager->persist($stagiaire);
+                $entityManager->flush();
 
-            return $this->redirectToRoute('app_stagiaire');
+                return $this->redirectToRoute('app_stagiaire');
+            }
+            else
+            {
+                $this->addFlash(
+                    'warning', 
+                    'Date de naissance invalide : la date doit être anterieure à la date actuelle.'
+                );
+                return $this->redirectToRoute("new_session");
+            }
         }
 
         return $this->render('stagiaire/new.html.twig', [

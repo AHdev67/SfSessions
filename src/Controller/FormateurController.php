@@ -45,12 +45,24 @@ class FormateurController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             
             $formateur = $form->getData();
-            //equivalent PDO prepare
-            $entityManager->persist($formateur);
-            //equivalent PDO execute
-            $entityManager->flush();
+            $now = new DateTime();
+            if ($formateur->getDateNaissance() < $now)
+            {
+                $entityManager->persist($formateur);
+                $entityManager->flush();
 
-            return $this->redirectToRoute('app_formateur');
+                return $this->redirectToRoute('app_formateur');
+            }
+            else
+            {
+                $this->addFlash(
+                    'warning', 
+                    'Date de naissance invalide : la date doit être anterieure à la date actuelle.'
+                );
+                return $this->redirectToRoute("new_session");
+            }
+            
+            
         }
 
         return $this->render('formateur/new.html.twig', [
