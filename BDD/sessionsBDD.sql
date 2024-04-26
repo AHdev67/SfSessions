@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `formateur` (
   `code_postal` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `ville` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table sfsessions.formateur : ~3 rows (environ)
 INSERT INTO `formateur` (`id`, `nom`, `prenom`, `date_naissance`, `tel`, `email`, `code_postal`, `ville`) VALUES
@@ -115,9 +115,14 @@ CREATE TABLE IF NOT EXISTS `programme` (
   KEY `IDX_3DDCB9FF613FECDF` (`session_id`),
   CONSTRAINT `FK_3DDCB9FF613FECDF` FOREIGN KEY (`session_id`) REFERENCES `session` (`id`),
   CONSTRAINT `FK_3DDCB9FFAFC2B591` FOREIGN KEY (`module_id`) REFERENCES `module` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table sfsessions.programme : ~0 rows (environ)
+INSERT INTO `programme` (`id`, `module_id`, `session_id`, `duree_module`) VALUES
+	(2, 2, 1, 7),
+	(3, 3, 1, 5),
+	(5, 5, 1, 6),
+	(6, 7, 1, 42);
 
 -- Listage de la structure de table sfsessions. session
 CREATE TABLE IF NOT EXISTS `session` (
@@ -135,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `session` (
   CONSTRAINT `FK_D044D5D45200282E` FOREIGN KEY (`formation_id`) REFERENCES `formation` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table sfsessions.session : ~2 rows (environ)
+-- Listage des données de la table sfsessions.session : ~0 rows (environ)
 INSERT INTO `session` (`id`, `formation_id`, `formateur_id`, `intitule_session`, `nb_places`, `date_debut`, `date_fin`) VALUES
 	(1, 1, 1, 'DWWM_2_24_25', 5, '2024-04-23 00:00:00', '2025-02-21 00:00:00'),
 	(3, 4, 1, 'RAN_1_24', 6, '2024-01-04 00:00:00', '2024-04-04 00:00:00'),
@@ -158,7 +163,7 @@ CREATE TABLE IF NOT EXISTS `stagiaire` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table sfsessions.stagiaire : ~1 rows (environ)
+-- Listage des données de la table sfsessions.stagiaire : ~3 rows (environ)
 INSERT INTO `stagiaire` (`id`, `nom`, `prenom`, `date_naissance`, `tel`, `email`, `adresse`, `code_postal`, `ville`, `date_inscription`) VALUES
 	(1, 'MAGNIFIQUE', 'Marius', '1993-02-23', '06 61 25 47 83', 'marius.magnifique@gmail.com', '6 rue des Pamplemousses', '67000', 'STRASBOURG', '2024-04-23 11:20:50'),
 	(2, 'BINGBONG', 'Didier', '2004-05-06', '06 82 66 99 42', 'bing.bong@gmail.com', '32 rue bing bong', '26200', 'MONTELIMAR', '2024-04-24 12:28:31'),
@@ -175,7 +180,7 @@ CREATE TABLE IF NOT EXISTS `stagiaire_session` (
   CONSTRAINT `FK_D32D02D4BBA93DD6` FOREIGN KEY (`stagiaire_id`) REFERENCES `stagiaire` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table sfsessions.stagiaire_session : ~2 rows (environ)
+-- Listage des données de la table sfsessions.stagiaire_session : ~4 rows (environ)
 INSERT INTO `stagiaire_session` (`stagiaire_id`, `session_id`) VALUES
 	(1, 1),
 	(1, 3),
@@ -192,11 +197,12 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `prenom` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_IDENTIFIER_EMAIL` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table sfsessions.utilisateur : ~1 rows (environ)
+-- Listage des données de la table sfsessions.utilisateur : ~2 rows (environ)
 INSERT INTO `utilisateur` (`id`, `email`, `roles`, `password`, `nom`, `prenom`) VALUES
-	(1, 'john.php@wanadoo.fr', '[]', '$2y$13$9u1eRdPcs/wXJlKx3uRxNOkHqyJ3.fV4qlmLv2o58j1Gv3FlPxyJC', 'PHP', 'John');
+	(1, 'john.php@wanadoo.fr', '["ROLE_ADMIN"]', '$2y$13$9u1eRdPcs/wXJlKx3uRxNOkHqyJ3.fV4qlmLv2o58j1Gv3FlPxyJC', 'PHP', 'John'),
+	(2, 'test.user@bingus.com', '[]', '$2y$13$/NVX6K..ujv/kz6tasSuGOwfkeUQlkf7uvyR8joGRiXhIySh8DS9S', 'TEST', 'User');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
