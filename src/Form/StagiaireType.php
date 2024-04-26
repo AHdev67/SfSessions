@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class StagiaireType extends AbstractType
@@ -42,7 +43,7 @@ class StagiaireType extends AbstractType
                 ]
             ])
 
-            ->add('email', TextType::class, [
+            ->add('email', EmailType::class, [
                 'attr' => [
                     'class' => 'form-control mb-3'
                 ]

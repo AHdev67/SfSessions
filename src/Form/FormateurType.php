@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class FormateurType extends AbstractType
@@ -40,7 +41,7 @@ class FormateurType extends AbstractType
                 ]
             ])
 
-            ->add('email', TextType::class, [
+            ->add('email', EmailType::class, [
                 'attr' => [
                     'class' => 'form-control mb-3'
                 ]
